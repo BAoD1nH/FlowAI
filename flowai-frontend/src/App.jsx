@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 // src/App.jsx
 function FeatureCard({ icon, title, desc, href }) {
 	return (
@@ -77,62 +79,60 @@ function App() {
                             icon={<i className="fa-regular fa-note-sticky"></i>}
                             title="AI Note Assistant"
                             desc="Tóm tắt, sắp xếp ý chính, tạo checklist và nhắc việc từ ghi chú của bạn."
-                            href="#note"
+                            href="/note"
                         />
                         <FeatureCard
                             icon={<i className="fa-solid fa-chart-line"></i>}
                             title="Productivity Tracker"
                             desc="Theo dõi thời gian, thói quen và mục tiêu. Nhận báo cáo hiệu suất hằng tuần."
-                            href="#tracker"
+                            href="/tracker"
                         />
                     </div>
                 </div>
             </section>
 
 			{/* DETAIL SECTIONS (tuỳ ý, có thể ẩn/hiện sau) */}
-			<section id="note" className="py-16">
-				<div className="max-w-6xl mx-auto px-5 grid md:grid-cols-2 gap-8 items-center">
-					<div className="rounded-2xl bg-white/70 backdrop-blur p-8 shadow ring-1 ring-black/5">
+			<section id="features" className="py-16">
+				<div className="max-w-6xl mx-auto px-5">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+					{/* Card 1: AI Note Assistant */}
+					<div id="note" className="rounded-2xl bg-white/70 backdrop-blur p-8 shadow ring-1 ring-black/5">
 						<h3 className="text-2xl font-bold text-emerald-900">AI Note Assistant</h3>
+						<p className="mt-2 text-emerald-800/85">
+						Biến ghi chú thành checklist hành động, highlight điểm chính và gợi ý lịch tự động.
+						</p>
 						<ul className="mt-4 space-y-2 text-emerald-800/90">
-							<li>• Tự động tóm tắt & highlight</li>
-							<li>• Sinh to-do từ ghi chú</li>
-							<li>• Nhắc lịch thông minh từ câu chữ</li>
+						<li>• Upload file/ảnh hoặc dán văn bản; hiểu ngữ cảnh tiếng Việt tốt</li>
+						<li>• Tóm tắt thông minh (key points, outline) + highlight trích dẫn</li>
+						<li>• Sinh checklist + deadline, gợi ý lịch (sẵn sàng đồng bộ Calendar)</li>
 						</ul>
 						<div className="mt-6 flex gap-3">
-							<button className="rounded-lg bg-emerald-600 text-white px-4 py-2 hover:bg-emerald-700">
-								Try now
-							</button>
-							<button className="rounded-lg bg-white px-4 py-2 ring-1 ring-black/10 hover:bg-slate-50">
-								Learn more
-							</button>
+						<a href="#upload" className="rounded-lg bg-emerald-600 text-white px-4 py-2 hover:bg-emerald-700">Try now</a>
+						<a href="#how" className="rounded-lg bg-white px-4 py-2 ring-1 ring-black/10 hover:bg-slate-50">Learn more</a>
 						</div>
 					</div>
-					<div className="hidden md:block text-8xl text-emerald-900/20 text-center">📝</div>
+
+					{/* Card 2: Productivity Tracker */}
+					<div id="tracker" className="rounded-2xl bg-white/70 backdrop-blur p-8 shadow ring-1 ring-black/5">
+						<h3 className="text-2xl font-bold text-emerald-900">Productivity Tracker</h3>
+						<p className="mt-2 text-emerald-800/85">
+						Đặt mục tiêu, theo dõi thói quen và xem lịch kiểu Google Calendar — tất cả trong một nơi.
+						</p>
+						<ul className="mt-4 space-y-2 text-emerald-800/90">
+						<li>• Goals ngày / tuần / tháng + mức độ ưu tiên</li>
+						<li>• Checklist & habit tracking; trạng thái Todo → Doing → Done</li>
+						<li>• Đồng bộ Google Calendar; báo cáo hiệu suất tuần/tháng</li>
+						</ul>
+						<div className="mt-6 flex gap-3">
+						<a href="#dashboard" className="rounded-lg bg-emerald-600 text-white px-4 py-2 hover:bg-emerald-700">Start tracking</a>
+						<a href="#benefits" className="rounded-lg bg-white px-4 py-2 ring-1 ring-black/10 hover:bg-slate-50">View demo</a>
+						</div>
+					</div>
+					</div>
 				</div>
 			</section>
 
-			<section id="tracker" className="py-16">
-				<div className="max-w-6xl mx-auto px-5 grid md:grid-cols-2 gap-8 items-center">
-					<div className="hidden md:block text-8xl text-emerald-900/20 text-center">📈</div>
-					<div className="rounded-2xl bg-white/70 backdrop-blur p-8 shadow ring-1 ring-black/5">
-						<h3 className="text-2xl font-bold text-emerald-900">Productivity Tracker</h3>
-						<ul className="mt-4 space-y-2 text-emerald-800/90">
-							<li>• Theo dõi thời gian & thói quen</li>
-							<li>• Mục tiêu tuần/tháng, nhắc deadline</li>
-							<li>• Báo cáo hiệu suất & xu hướng</li>
-						</ul>
-						<div className="mt-6 flex gap-3">
-							<button className="rounded-lg bg-emerald-600 text-white px-4 py-2 hover:bg-emerald-700">
-								Start tracking
-							</button>
-							<button className="rounded-lg bg-white px-4 py-2 ring-1 ring-black/10 hover:bg-slate-50">
-								View demo
-							</button>
-						</div>
-					</div>
-				</div>
-			</section>
+
 
 			{/* FOOTER */}
 			<footer className="py-8">
