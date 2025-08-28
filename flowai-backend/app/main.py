@@ -22,6 +22,15 @@ app.add_middleware(
 	allow_headers=["*"],
 )
 
+from app.core.ai_router import router as ai_router
+app.include_router(ai_router)
+for r in app.router.routes:
+    try:
+        print("ROUTE:", r.path, list(getattr(r, "methods", [])))
+    except Exception:
+        pass
+
+
 # ===== Helper: map lỗi quota thành 402 =====
 def _httpize_exception(e: Exception):
 	msg = str(e)
