@@ -298,6 +298,17 @@ export default function Tracker() {
 
 	const [gcConnected, setGcConnected] = useState(lsGet("gcConnected", false));
 	useEffect(()=>lsSet("gcConnected", gcConnected), [gcConnected]);
+  
+  function deleteGoal(goal) {
+    // Xoá goal
+    setGoals(prev => prev.filter(g => g.id !== goal.id));
+    // Xoá checklist con (id bắt đầu với `${goal.id}-`)
+    setTasks(prev => prev.filter(t => !String(t.id).startsWith(`${goal.id}-`)));
+    // Xoá events gắn với goal
+    setEvents(prev => prev.filter(e => e.goalId !== goal.id));
+  }
+
+
 
   async function onAIPlan() {
     setPlanning(true);
@@ -339,6 +350,34 @@ export default function Tracker() {
         dateStr: t.dateStr || undefined,
       }));
 
+      // ADD: chuẩn hoá subtasks cho local scheduler (cần field text)
+      const normalized = aiSubtasks.map((t, i) => ({
+        id: t.id ?? i + 1,
+        text: t.text ?? t.title ?? `Task ${i + 1}`,
+        duration: Math.max(1, Math.round(Number(t.duration) || 1)),
+        dateStr: t.dateStr || undefined,
+      }));
+
+      // ADD: chọn dải ngày theo scope để fallback local scheduling
+      const dueDate = new Date(due || Date.now());
+      let candidateDates = [];
+      if (scope === "daily") {
+        candidateDates = [dueDate];
+      } else if (scope === "weekly") {
+        const s = startOfWeek(dueDate);
+        candidateDates = Array.from({ length: 7 }, (_, i) => addDays(s, i)).filter(isWeekday);
+      } else { // monthly
+        const mStart = startOfMonth(dueDate);
+        let workDays = workingDaysBetween(mStart, dueDate);
+        // nếu thiếu ngày, mở rộng sang sau due
+        let cur = addDays(dueDate, 1);
+        while (workDays.length < normalized.length) {
+          if (isWeekday(cur)) workDays.push(new Date(cur));
+          cur = addDays(cur, 1);
+        }
+        candidateDates = workDays;
+      }
+
       // 4) Gọi scheduler – nếu lỗi thì vẫn tạo checklist từ aiSubtasks
       let scheduled = [];
       try {
@@ -376,19 +415,27 @@ export default function Tracker() {
           events: eventsPlan,
         };
       } else {
-        // Fallback: không có lịch nhưng vẫn có checklist
+        // REPLACE: Fallback local scheduling để luôn có events
+        const { scheduledSubtasks, events: eventsPlan } =
+          scheduleAcrossDates(normalized, candidateDates, events);
+
         plan = {
-          subtasks: aiSubtasks.map(s => ({
+          subtasks: scheduledSubtasks.map(s => ({
             id: s.id,
             text: s.text,
             duration: s.duration,
-            dateStr: s.dateStr || due, // gán tạm due để hiện ở UI
+            dateStr: s.dateStr,
           })),
-          events: [],
+          events: eventsPlan,
         };
       }
 
       addGoal(plan); // <-- giờ chắc chắn có subtasks
+      // ADD: nhảy lịch tới tuần chứa event sớm nhất để nhìn thấy ngay
+      if (plan.events?.length) {
+        const firstISO = plan.events.map(e => e.dateStr).sort()[0];
+        if (firstISO) setWeekStart(startOfWeek(new Date(firstISO)));
+      }
     } catch (e) {
       console.error(e);
       alert("AI planning failed. Kiểm tra backend & API key.");
@@ -427,8 +474,9 @@ export default function Tracker() {
 		}
 		// add scheduled events
 		if (plan?.events?.length) {
-			setEvents(prev => [...plan.events, ...prev]);
-		}
+      const tagged = plan.events.map(ev => ({ ...ev, goalId: g.id }));
+      setEvents(prev => [...tagged, ...prev]);
+    }
 		setTitle(""); setDesc("");
 	}
 
@@ -630,12 +678,21 @@ export default function Tracker() {
 						{goals.filter(g=>g.scope===activeTab).map(g=>(
 							<article key={g.id} className="rounded-xl border border-slate-200 bg-white p-4">
 								<div className="flex items-start justify-between gap-2">
-									<div>
-										<h3 className="font-semibold">{g.title}</h3>
-										<p className="text-sm text-slate-600 whitespace-pre-wrap">{g.desc}</p>
-										<div className="mt-1 text-xs text-slate-500">Due: {g.due} • Priority: {g.priority}</div>
-									</div>
-								</div>
+                  <div>
+                    <h3 className="font-semibold">{g.title}</h3>
+                    <p className="text-sm text-slate-600 whitespace-pre-wrap">{g.desc}</p>
+                    <div className="mt-1 text-xs text-slate-500">Due: {g.due} • Priority: {g.priority}</div>
+                  </div>
+
+                  <button
+                    onClick={() => deleteGoal(g)}
+                    title="Delete goal"
+                    className="p-2 text-slate-400 hover:text-red-600"
+                  >
+                    <i className="fa-solid fa-trash" />
+                  </button>
+                </div>
+
 								{g.subtasks?.length ? (
                   <ul className="mt-3 pl-1 text-sm space-y-2">
                     {g.subtasks.map(s => {
