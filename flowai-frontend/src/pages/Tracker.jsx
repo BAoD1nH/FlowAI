@@ -222,15 +222,15 @@ function downloadText(filename, text) {
 const API = import.meta?.env?.VITE_API_URL ?? ""; // ví dụ http://localhost:8000
 
 async function apiPlanGoals({ title, desc, due, scope, locale }) {
-  const r = await fetch(`/api/ai/plan_goal`, {
+  const r = await fetch(`${API}/api/ai/plan_goal`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ title, desc, due, scope, locale })
   });
   if (!r.ok) throw new Error(`plan_goal failed: ${r.status}`);
-  return await r.json(); // { subtasks, notes }
+  const data = await r.json();
+  return data.subtasks; // [{id,text,duration,dateStr?}]
 }
-
 
 
 async function apiSchedule({ tasks, start_date, work_hours="09:00-17:00", timezone="Asia/Ho_Chi_Minh" }) {
