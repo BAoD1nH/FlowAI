@@ -67,8 +67,19 @@ source ~/.bashrc  # or source ~/.zshrc
 ```
 
 ```bash
+# 3. Install and use Node.js version 22
 nvm install 22
 nvm use 22
+
+# Verify version (Should be v22.x.x)
 node -v
+
+# Try running the app again
 npm run dev
 ```
+
+## License
+- This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- Any questions please contact via baodinhtfb@gmail.com
+
+> If you find this project useful, please give it a star ⭐️! Contributions are also welcome.
