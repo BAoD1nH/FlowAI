@@ -1,4 +1,4 @@
-# FlowAI - AI Web Tool based on LLMs 
+# FlowAI - Where notes turn into goals
 An AI Web Tool which focus on enhacing your productivity by making notes, creating goals, schedulings and automatic synchronize with Your Google Calendar. It creates a seamless workflow between note-taking and goal execution:
 
 * **📝 AI Note Assistant:** Instantly summarizes notes, extracts key points, and generates actionable checklists with deadline suggestions (Optimized for Vietnamese context).
@@ -14,7 +14,9 @@ An AI Web Tool which focus on enhacing your productivity by making notes, creati
 ### Backend
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Google Gemini](https://img.shields.io/badge/Google%20Gemini%20API-8E75B2?style=for-the-badge&logo=google&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
+
+> *Note: The system is designed to be LLM-agnostic. Currently configured with **Google Gemini** for cost-efficiency (Free Tier).*
 
 ### DevOps & Tools
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
