@@ -3,8 +3,9 @@ An AI Web Tool which focus on enhacing your productivity by making notes, creati
 
 * **📝 AI Note Assistant:** Instantly summarizes notes, extracts key points, and generates actionable checklists with deadline suggestions (Optimized for Vietnamese context).
 * **📊 Productivity Tracker:** A centralized dashboard to track habits, manage goals (Todo/Doing/Done), and sync directly with Google Calendar.
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ff60265e-059b-4eaf-b082-8c98ad1c04cc" width="32%" />
+  <img src="https://github.com/user-attachments/assets/df4a321b-ada1-4e76-83d3-ec2db503dfa1" width="32%" />
   <img src="https://github.com/user-attachments/assets/818b6a6c-001e-4328-b6d7-bd8f7bbbdd27" width="32%" />
   <img src="https://github.com/user-attachments/assets/a8e453b1-25b6-4712-a7fb-86ec506c2b37" width="32%" />
 </p>
