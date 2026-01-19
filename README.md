@@ -8,9 +8,10 @@ An AI Web Tool which focus on enhacing your productivity by making notes, creati
   <img src="https://github.com/user-attachments/assets/df4a321b-ada1-4e76-83d3-ec2db503dfa1" width="48%" />
   <img src="https://github.com/user-attachments/assets/818b6a6c-001e-4328-b6d7-bd8f7bbbdd27" width="48%" />
 </p>
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ca8f2147-9ee7-41b3-aa97-49babe8c34eb" width="48%" />
   <img src="https://github.com/user-attachments/assets/a8e453b1-25b6-4712-a7fb-86ec506c2b37" width="48%" />  
+  <img src="https://github.com/user-attachments/assets/43de64f0-605b-4be2-8fcc-9bcff86d8696" width="48%" />
 </p>
 
 ## 🛠️ Built With
